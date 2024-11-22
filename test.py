@@ -1,9 +1,16 @@
 import os
+from dotenv import load_dotenv
 from openai import OpenAI
+
+# Load environment variables from .env file
+load_dotenv()
 
 token = os.environ["GITHUB_TOKEN"]
 endpoint = "https://models.inference.ai.azure.com"
 model_name = "gpt-4o"
+
+if not token:
+    raise ValueError("GITHUB_TOKEN is not set in the .env file")
 
 client = OpenAI(
     base_url=endpoint,
