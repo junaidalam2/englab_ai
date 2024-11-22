@@ -1,15 +1,13 @@
-# englab_ai
-
 # LLM AI
 
 ## Prerequisites
 
-Python 3.12+
-flask
-transformers
-torch
-Access to GitHub Models (for GITHUB_TOKEN)
-SQLite
+- Python 3.12+
+- flask
+- transformers
+- torch
+- Access to GitHub Models (for GITHUB_TOKEN)
+- SQLite
 
 
 ## Setup Instructions
@@ -29,6 +27,7 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 
 ```bash
 pip install -r requirements.txt
+```
 
 
 4. Start the development server:
