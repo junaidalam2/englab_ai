@@ -1,5 +1,13 @@
 # LLM AI
 
+## Application Structure
+
+- The structure includes flask application for API handling, LLM Model (gpt2)
+- Accept user prompts related to spiritual guidance.
+- Use the LLM to generate personalized insights or practices based on ancient teachings.
+- Present these responses in a user-friendly format.
+
+
 ## Prerequisites
 
 - Python 3.12+
