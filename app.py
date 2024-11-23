@@ -13,6 +13,7 @@ def generate():
         return jsonify({"error": "No prompt provided"}), 400
 
     response = generate_response(prompt)
+    print("response generated", response)
     return jsonify({"response": response})
 
 
