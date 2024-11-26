@@ -1,38 +1,44 @@
 import os
 from dotenv import load_dotenv
-from openai import OpenAI
+from transformers import GPT2LMHeadModel, GPT2Tokenizer
 
 # Load environment variables from .env file
 load_dotenv()
 
-token = os.environ["GITHUB_TOKEN"]
-endpoint = "https://models.inference.ai.azure.com"
-model_name = "gpt-4o"
+role_prompt = "You are a helpful assistant who follows instructions explicitly and does not hallucinate."
 
-if not token:
-    raise ValueError("GITHUB_TOKEN is not set in the .env file")
+# Load model and tokenizer
+tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
+model = GPT2LMHeadModel.from_pretrained("gpt2")
 
-client = OpenAI(
-    base_url=endpoint,
-    api_key=token,
-)
+def generate_response(prompt):
+    # Encode the input text
+    inputs = tokenizer(role_prompt + " " + prompt, return_tensors="pt")
 
-response = client.chat.completions.create(
-    messages=[
-        {
-            "role": "system",
-            "content": "You are a helpful assistant.",
-        },
-        {
-            "role": "user",
-            "content": "What is the capital of France?",
-        }
-    ],
-    temperature=1.0,
-    top_p=1.0,
-    max_tokens=1000,
-    model=model_name
+    # Generate text
+    outputs = model.generate(
+        inputs.input_ids,
+        max_length=100,  # Adjust as needed
+        num_return_sequences=1,
+        pad_token_id=tokenizer.eos_token_id,
+        do_sample=True,
+        temperature=0.7,
+    )
 
-)
+    # Decode the generated text
+    response_text = tokenizer.decode(outputs[0], skip_special_tokens=True)
 
-print(response.choices[0].message.content)
+    return {"text": response_text, "status": "success"}
+
+if __name__ == "__main__":
+    # Example prompts to test the function
+    prompts = [
+        "What is the capital of France?",
+        "Explain quantum physics in simple terms.",
+        "What are the benefits of meditation?",
+    ]
+
+    for prompt in prompts:
+        response = generate_response(prompt)
+        print(f"Prompt: {prompt}")
+        print(f"Response: {response['text']}\n")

@@ -1,3 +1,7 @@
 flask
 transformers
 torch
+torchvision
+torchaudio
+accelerate
+datasets

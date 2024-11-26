@@ -2,3 +2,15 @@
 src/__pycache__
 venv/
 .DS_Store
+cached_lm_*
+
+# Ignore compiled Python files in model/__pycache__ directory
+model/__pycache__/__init__.cpython-312.pyc
+model/__pycache__/model_loader.cpython-312.pyc
+
+# Ignore cached files
+cached_lm_GPT2Tokenizer_128_spiritual_guidance.txt
+cached_lm_GPT2Tokenizer_128_spiritual_guidance.txt.lock
+
+
+gpt2-finetuned-spiritual/
