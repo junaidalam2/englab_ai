@@ -24,4 +24,14 @@ def generate_response(prompt):
     # Decode the generated text
     response_text = tokenizer.decode(outputs[0], skip_special_tokens=True)
 
-    return {"text": response_text, "status": "success"}
+    # Separate the response from the input prompt
+    if role_prompt + " " + prompt in response_text:
+        generated_response = response_text.replace(role_prompt + " " + prompt, "").strip()
+    else:
+        generated_response = response_text.strip()
+
+    return {
+        "prompt": prompt,
+        "response": generated_response,
+        "status": "success"
+    }
